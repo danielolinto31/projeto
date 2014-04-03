@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"> 
+
+<ui:composition template="/painel/_template.xhtml">
+	
+	<ui:define name="corpo">
+		
+		<h:form id="form1">
+				 
+			<p:fieldset legend="Cadastrar Clube" style="margin-bottom: 15px">
+			
+				<h2>
+					<h:outputText value="Novo Clube" rendered="#{empty clubeBean.clube.id}" />
+					<h:outputText value="Editar Clube" rendered="#{not empty clubeBean.clube.id}" />
+				</h2>
+				
+				<p:separator />
+				
+				<h:messages styleClass="erros" />
+			
+				<h:panelGrid columns="6" cellspacing="10" style="width: 100%">
+			
+					<h:outputLabel value="Abreviação: *" for="abreviacao" styleClass="label" />
+					<p:inputText id="abreviacao" value="#{clubeBean.clube.abreviacao}" required="true"
+						requiredMessage="Campo Obrigatório" />
+						
+					<h:outputLabel value="Nome: *" for="nome" styleClass="label" />
+					<p:inputText id="nome" value="#{clubeBean.clube.nome}" required="true"
+						requiredMessage="Campo Obrigatório" />
+					
+					<h:outputLabel value="Nome Completo: *" for="nomeCompleto" styleClass="label" />
+					<p:inputText id="nomeCompleto" value="#{clubeBean.clube.nomeCompleto}" required="true"
+						requiredMessage="Campo Obrigatório" />
+					
+					<h:outputLabel value="Presidente: *" for="presidente" styleClass="label" />
+					<p:inputText id="presidente" value="#{clubeBean.clube.presidente}" required="true"
+						requiredMessage="Campo Obrigatório" />
+					
+					<h:outputLabel value="Fundação: *" for="fundacao" styleClass="label" />
+					<p:calendar pattern="dd/MM/yyyy" value="#{clubeBean.clube.fundacao}" locale="pt"
+						required="true"	requiredMessage="Campo Obrigatório" id="fundacao" />  
+					
+					<h:outputLabel value="Cidade: *" for="cidade" styleClass="label" />
+					<p:inputText id="cidade" value="#{clubeBean.clube.cidade}" required="true"
+						requiredMessage="Campo Obrigatório" />
+					
+					<h:outputLabel value="Estado: " for="estado" styleClass="label" />
+					<p:selectOneMenu id="estado" value="#{clubeBean.clube.estado}">
+						<f:selectItems value="#{estadoBean.estados}" var="estado" itemLabel="#{estado.nomeEstado}" 
+			            	itemValue="#{estado.siglaEstado}" />  
+					</p:selectOneMenu>
+					
+				</h:panelGrid>
+
+				<div class="alinhar-button">
+					<p:commandButton action="#{clubeBean.grava}" value="Gravar" update="@form" process="@form"
+						rendered="#{empty clubeBean.clube.id}" />
+					<p:commandButton action="#{clubeBean.grava}" value="Alterar" update="@form" process="@form"
+						rendered="#{not empty clubeBean.clube.id}" />
+					<p:commandButton action="clubes" value="Cancelar" update="@form"
+						immediate="true" rendered="#{not empty clubeBean.clube.id}" /> 
+				</div>
+			
+			</p:fieldset>
+					
+		</h:form>
+		
+		<h:form id="form2">
+
+			<p:dataTable value="#{clubeBean.clubesOrdem}" var="clube" id="dataTable" paginator="true" rows="10"
+			paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+			emptyMessage="Não há clubes cadastrados" currentPageReportTemplate="{currentPage} de {totalPages}"
+			paginatorPosition="bottom" style="text-align: center">
+			
+				<p:column sortBy="nome" headerText="Nome">
+					#{clube.nome}
+				</p:column>
+				<p:column sortBy="nomeCompleto" headerText="Nome Completo">
+					#{clube.nomeCompleto}
+				</p:column>
+				<p:column sortBy="presidente" headerText="Presidente">
+					#{clube.presidente}
+				</p:column>
+				<p:column sortBy="fundacao" headerText="Fundação">
+					<h:outputText value="#{clube.fundacao}">
+						<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-3" />
+					</h:outputText>
+				</p:column>
+				<p:column sortBy="cidade" headerText="Local">
+					#{clube.cidade}/#{clube.estado}
+				</p:column>
+				
+				<p:column headerText="Ações">
+					<h:commandLink action="#{clubeBean.remove(clube)}" value="Remover" style="margin-right: 10px">
+						<f:ajax render="@form" />
+					</h:commandLink>
+					
+					<h:commandLink value="Alterar">
+						<f:setPropertyActionListener target="#{clubeBean.clube}" value="#{clube}" />
+					</h:commandLink>
+				</p:column>
+				
+				<f:facet name="footer">  
+		            Total de #{clubeBean.clubes.size()} linha(s).  
+		        </f:facet>  
+			</p:dataTable>	
+		
+		</h:form>
+		
+	</ui:define>
+	
+</ui:composition>
+
+</html>

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"> 
+
+<ui:composition template="/painel/_template.xhtml">
+	
+	<ui:define name="corpo">
+
+		<p:fieldset legend="Cadastrar Campeonato" style="margin-bottom: 15px">
+			
+			<h:form id="form1">
+			
+				<p:tabMenu activeIndex="1" style="margin-bottom:10px">  
+				    <p:menuitem value="Campeonato" url="campeonatos.xhtml" />  
+				    <p:menuitem value="Fase" url="fases.xhtml" />   
+				</p:tabMenu>
+			    
+				<h2>
+					<h:outputText value="Nova Fase" rendered="#{empty faseBean.fase.id}" />
+					<h:outputText value="Editar Fase" rendered="#{not empty faseBean.fase.id}" />
+				</h2>
+				<p:separator />
+					
+				<h:messages styleClass="erros" />
+				
+				<h:panelGrid columns="6" cellspacing="10" cellpadding="10" width="80%" style="margin: 10px 0 10px 0"
+					rendered="#{empty faseBean.fase.id}">
+						
+					<h:outputLabel value="Nome: *" for="nome" styleClass="label" />
+					<p:inputText id="nome" value="#{faseBean.fase.nome}" required="true"
+						requiredMessage="Campo Obrigatório" size="40" />	
+						
+					<h:outputLabel value="Campeonato: *" for="campeonato" styleClass="label" />	
+					<p:selectOneMenu value="#{faseBean.idCampeonato}" id="campeonato">  
+			            <f:selectItems value="#{campeonatoBean.campeonatosOrdem}" var="campeonato" itemLabel="#{campeonato.nome}" 
+			            	itemValue="#{campeonato.id}" />
+			        </p:selectOneMenu>
+				
+				</h:panelGrid>
+				
+				<h:panelGrid columns="6" cellspacing="10" cellpadding="10" width="100%" style="margin: 10px 0 10px 0" 
+					rendered="#{not empty faseBean.fase.id}">
+						
+					<h:outputLabel value="Nome: *" for="nome2" styleClass="label" />
+					<p:inputText id="nome2" value="#{faseBean.fase.nome}" required="true"
+						requiredMessage="Campo Obrigatório" size="40" />	
+						
+					<h:outputLabel value="Campeonato: *" for="campeonato2" styleClass="label" />	
+					<p:selectOneMenu value="#{faseBean.idCampeonato}" id="campeonato2">  
+			            <f:selectItems value="#{campeonatoBean.campeonatosOrdem}" var="campeonato" itemLabel="#{campeonato.nome}" 
+			            	itemValue="#{campeonato.id}" />
+			        </p:selectOneMenu>
+			        
+			        <h:outputLabel value="Campeao: *" for="campeao" styleClass="label" />	
+					<p:selectOneMenu value="#{faseBean.idCampeao}" id="campeao">  
+			            <f:selectItems value="#{clubeBean.clubesOrdem}" var="clube" itemLabel="#{clube.nome}" 
+			            	itemValue="#{clube.id}" />
+			        </p:selectOneMenu>
+				
+				</h:panelGrid>
+
+				<div class="alinhar-button">
+					<p:commandButton action="#{faseBean.grava}" value="Gravar" update="@form" process="@form"
+						rendered="#{empty faseBean.fase.id}" />
+					<p:commandButton action="#{faseBean.grava}" value="Alterar" update="@form" process="@form"
+						rendered="#{not empty faseBean.fase.id}" />
+					<p:commandButton action="campeonatos" value="Cancelar" update="@form"
+						immediate="true" rendered="#{not empty faseBean.fase.id}" />
+				</div>
+			
+			</h:form>
+			
+			<h:form id="form2">
+
+				<p:dataTable value="#{faseBean.fases}" var="fase" id="dataTable" paginator="true" rows="12"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+				emptyMessage="Não há fases de campeonatos cadastrados" currentPageReportTemplate="{currentPage} de {totalPages}"
+				paginatorPosition="bottom" style="text-align: center; margin-bottom: 5px">
+	
+					<p:column sortBy="nome" headerText="Nome da fase">
+						#{fase.nome}
+					</p:column>
+					<p:column sortBy="ano" headerText="Ano">
+						#{fase.campeonato.ano}
+					</p:column>
+					<p:column sortBy="nome" headerText="Nome do Campeonato">
+						#{fase.campeonato.nome}
+					</p:column>
+					<p:column sortBy="nomeCompleto" headerText="Clube Campeão">
+						#{fase.campeao.nomeCompleto}
+					</p:column>
+					
+					<p:column headerText="Ações">
+						<h:commandLink action="#{faseBean.remove(fase)}" value="Remover" style="margin-right: 25px">
+							<f:ajax render="@form" />
+						</h:commandLink>
+						
+						<h:commandLink value="Alterar">
+							<f:setPropertyActionListener target="#{faseBean.fase}" value="#{fase}" />
+						</h:commandLink>
+					</p:column>
+					
+					<f:facet name="footer">  
+			            Total de #{faseBean.fases.size()} linha(s).  
+			        </f:facet>  
+				</p:dataTable>	
+			
+			</h:form>
+			
+		</p:fieldset>
+
+	</ui:define>
+	
+</ui:composition>
+
+</html>

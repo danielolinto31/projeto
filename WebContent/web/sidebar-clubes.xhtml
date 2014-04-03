@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets" 
+	xmlns:p="http://primefaces.org/ui">
+
+<f:view contentType="text/html"> 
+	
+	<div class="sidebar">
+		
+		<p:panel header="CLUBES" style="margin-bottom: 15px">
+		
+			<p:dataGrid var="clube" value="#{clubeBean.clubesOrdem}" columns="5"  
+		        rows="12" paginator="false" style="border:0 !important; padding:0; margin:0"
+		        emptyMessage="Não há clubes cadastradas">
+				
+	        	<h:outputLink value="#{facesContext.externalContext.requestContextPath}/clubes/#{clube.imagem}.xhtml">
+					<h:graphicImage id="imagem" library="img/escudos" name="#{clube.imagem}.png" width="41" title="#{clube.nome}" />
+				</h:outputLink>
+
+			</p:dataGrid>
+
+		</p:panel>
+		
+		<p:panel header="PRÓXIMOS JOGOS" style="margin-bottom: 15px">
+			
+			<p:dataGrid var="partida" value="#{partidaBean.partidasOrdemFinalizado}" columns="1"  
+		        rows="4" paginator="true" style="border:0 !important; padding: 0; margin: 0"
+		        emptyMessage="Não há partidas cadastradas" paginatorTemplate="{PageLinks}" paginatorPosition="top">
+		        
+				<h:panelGrid columns="7" cellspacing="0" style="width: 100%; padding-top:5px" columnClasses="pri,sec,ter,qua,qui,sex,set">
+					<h:outputText value="#{partida.mandante}" />
+					<h:graphicImage id="abc" library="img/escudos" name="abc.png" width="41" />
+					<h:outputText value="#{partida.resultado1}" />
+					<h:outputText value="x" />
+					<h:outputText value="#{partida.resultado2}" />
+					<h:graphicImage id="america" library="img/escudos" name="america.png" width="41" />
+					<h:outputText value="#{partida.visitante}" />
+				</h:panelGrid>
+				<center style="font-size: 11px; color: #BBB; border-bottom: 1px solid #CCC; padding-bottom:5px">
+					<h:outputText value="#{partida.rodada}ª Rodada - " />
+					<h:outputText value="#{partida.data}">
+						<f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="GMT-3" />
+					</h:outputText>
+					<h:outputText value=" - #{partida.estadio.apelido}" />
+				</center>
+				
+			</p:dataGrid>
+			
+		</p:panel>
+	
+		<p:panel header="CLASSIFICAÇÃO" style="margin-bottom: 15px">
+			<p:panelGrid columns="4" style="text-align: center; width: 100%; margin-bottom: 10px">   
+				<h:outputLabel value="" />
+				<h:outputLabel value="CLUBE" style="font-weight:bold" />
+				<h:outputLabel value="JG" style="font-weight:bold" />
+				<h:outputLabel value="PT" style="font-weight:bold" />
+				
+				<h:outputLabel value="1º" />
+				<h:outputLabel value="ABC" />
+				<h:outputLabel value="1" />
+				<h:outputLabel value="1" />
+				
+				<h:outputLabel value="2º" />
+				<h:outputLabel value="Alecrim" />
+				<h:outputLabel value="1" />
+				<h:outputLabel value="1" />
+				
+				<h:outputLabel value="3º" />
+				<h:outputLabel value="Globo" />
+				<h:outputLabel value="1" />
+				<h:outputLabel value="1" />
+				
+				<h:outputLabel value="4º" />
+				<h:outputLabel value="Palmeira" />
+				<h:outputLabel value="1" />	
+				<h:outputLabel value="1" />
+			
+   				<h:outputLabel value="5º" />
+				<h:outputLabel value="Santa Cruz" />
+				<h:outputLabel value="1" />
+				<h:outputLabel value="1" />
+				
+				<h:outputLabel value="6º" />
+				<h:outputLabel value="Baraúnas" />
+				<h:outputLabel value="1" />
+				<h:outputLabel value="1" />
+				
+				<h:outputLabel value="7º" />
+				<h:outputLabel value="Assu" />
+				<h:outputLabel value="1" />
+				<h:outputLabel value="1" />
+				
+				<h:outputLabel value="8º" />
+				<h:outputLabel value="Corintians" />
+				<h:outputLabel value="1" />
+				<h:outputLabel value="1" />
+			</p:panelGrid>
+		</p:panel>
+		
+	</div> <!-- .sidebar -->
+	
+</f:view>
+
+</html>

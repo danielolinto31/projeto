@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"> 
+
+<ui:composition template="/_template.xhtml">
+	
+	<ui:define name="corpo">
+	
+		<div class="content">
+		
+			<p:panel header="NOTÍCIAS" style="padding-bottom: 15px;">
+			
+				<p:dataGrid value="#{noticiaBean.noticiasOrdem}" var="noticia" id="dataGrid" paginator="true" rows="6" columns="1"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					paginatorPosition="bottom" emptyMessage="Não há notícias cadastradas"
+					currentPageReportTemplate="{currentPage} de {totalPages}">
+					
+					<h:panelGrid columns="1" style="width:100%" cellpadding="0" cellspacing="0">
+						
+		                <h:outputText value="#{noticia.data}" style="color:#CCC; font-size:11px; font-style: italic;">
+							<f:convertDateTime pattern="dd/MM/yyyy - HH:mm" timeZone="GMT-3" /> 
+						</h:outputText> 
+						
+						<p:column headerText="Título">
+							<h:outputLink value="noticia.xhtml">
+								<h:outputText value="#{noticia.titulo}" style="font-weight: bold; font-size:14px;" />
+								<f:param name="noticia.id" value="#{noticia.id}" />
+							</h:outputLink>
+						</p:column>
+						<h:outputText value="#{noticia.subtitulo}" />
+
+		            </h:panelGrid>
+										
+					<f:facet name="footer">  
+			            Total de #{noticiaBean.noticias.size()} linha(s).  
+			        </f:facet> 
+				</p:dataGrid>
+			
+				<!-- 
+				<p:dataTable value="#{noticiaBean.noticiasOrdem}" var="noticia" id="dataTable" paginator="true" rows="25"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+				emptyMessage="Não há notícias cadastradas" currentPageReportTemplate="{currentPage} de {totalPages}"
+				paginatorPosition="bottom" style="text-align: center; margin-bottom: 10px;">
+				
+					<p:column headerText="Data">
+						<h:outputText value="#{noticia.data}">
+							<f:convertDateTime pattern="dd/MM/yyyy - HH:mm" timeZone="GMT-3" />
+						</h:outputText>
+					</p:column>
+					
+					<p:column headerText="Título">
+						<h:outputLink value="noticia.xhtml">
+							<h:outputText value="#{noticia.titulo}" />
+							<f:param name="noticia.id" value="#{noticia.id}" />
+						</h:outputLink>
+					</p:column>
+
+					<f:facet name="footer">  
+			            Total de #{noticiaBean.noticias.size()} linha(s).  
+			        </f:facet>  
+				</p:dataTable>	
+				-->
+				
+			</p:panel>
+			
+		</div>
+		
+	</ui:define>
+	
+</ui:composition>
+
+</html>

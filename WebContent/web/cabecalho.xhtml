@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"> 
+
+<f:view contentType="text/html">
+
+	<div id="cabecalho">
+			<div class="titulo">
+				<h:outputLink value="#{facesContext.externalContext.requestContextPath}/index.xhtml">
+					<h:outputText value="Projeto" />
+				</h:outputLink>
+			</div>
+			<!-- .titulo -->
+			<div class="redes-sociais">
+				<h:outputLink value="#" target="_blank">
+					<h:graphicImage id="facebook" library="img" name="facebook-icon.png" width="35" />
+				</h:outputLink>
+				<h:outputLink value="#" target="_blank">
+					<h:graphicImage id="google-plus" library="img" name="google-plus-icon.png" width="35" />
+				</h:outputLink>
+				<h:outputLink value="#" target="_blank">
+					<h:graphicImage id="twitter" library="img" name="twitter-icon.png" width="35" />
+				</h:outputLink>
+				<h:outputLink value="#" target="_blank">
+					<h:graphicImage id="youtube" library="img" name="youtube-icon.png" width="35" />
+				</h:outputLink>
+				
+				<p:tooltip for="facebook" value="Facebook" showEffect="fade"
+					hideEffect="fade" />
+				<p:tooltip for="google-plus" value="Google Plus" showEffect="fade"
+					hideEffect="fade" />
+				<p:tooltip for="twitter" value="Twitter" showEffect="fade"
+					hideEffect="fade" />
+				<p:tooltip for="youtube" value="Youtube" showEffect="fade"
+					hideEffect="fade" />
+			</div> <!-- .redes-sociais -->
+		</div> <!-- #cabecalho -->
+		
+</f:view>
+
+</html>

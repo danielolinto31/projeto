@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"> 
+
+<ui:composition template="/painel/_template.xhtml">
+	
+	<ui:define name="corpo">
+
+		<h:form id="form1">
+			 
+			<p:fieldset legend="Cadastrar Notícia" style="margin-bottom: 15px">
+			
+				<h2>
+					<h:outputText value="Nova Notícia" rendered="#{empty noticiaBean.noticia.id}" />
+					<h:outputText value="Editar Notícia" rendered="#{not empty noticiaBean.noticia.id}" />
+				</h2>
+				
+				<p:separator />
+				
+				<h:panelGrid columns="2" cellpadding="10" style="width: 100%; text-align: right; margin: 10px 0 10px 0">
+					<h:outputLabel value="Título: *" for="titulo" styleClass="label" />
+					<p:inputText id="titulo" value="#{noticiaBean.noticia.titulo}" required="true"
+						requiredMessage="Campo Obrigatório" style="width: 810px" />
+				</h:panelGrid>
+				<h:panelGrid columns="2" cellpadding="10" style="width: 100%; text-align: right; margin: 0 0 10px 0">
+					<h:outputLabel value="Sub-Título: *" for="subtitulo" styleClass="label" />
+					<p:inputText id="subtitulo" value="#{noticiaBean.noticia.subtitulo}" required="true"
+						requiredMessage="Campo Obrigatório" style="width: 810px" />
+				</h:panelGrid>
+				
+				<p:editor id="conteudo" value="#{noticiaBean.noticia.conteudo}" required="true" 
+					requiredMessage="Campo Obrigatório" />
+								
+				<div class="alinhar-button">
+					<p:commandButton action="#{noticiaBean.grava}" value="Gravar" update="@form" process="@form"
+						rendered="#{empty noticiaBean.noticia.id}" />
+					<p:commandButton action="#{noticiaBean.grava}" value="Alterar" update="@form" process="@form"
+						rendered="#{not empty noticiaBean.noticia.id}" />
+					<p:commandButton action="noticias" value="Cancelar" update="@form"
+						immediate="true" rendered="#{not empty noticiaBean.noticia.id}" /> 
+				</div>
+				
+			</p:fieldset>
+		
+		</h:form>
+		
+		<h:form id="form2">
+		
+			<p:dataTable value="#{noticiaBean.noticiasOrdem}" var="noticia" id="dataTable" paginator="true" rows="10"
+			paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+			emptyMessage="Não há notícias cadastradas" currentPageReportTemplate="{currentPage} de {totalPages}"
+			paginatorPosition="bottom" style="text-align: center">
+			
+				<p:column sortBy="id" headerText="Id">
+					#{noticia.id}
+				</p:column>
+				<p:column sortBy="data" headerText="Data">
+					<h:outputText value="#{noticia.data}">
+						<f:convertDateTime pattern="dd/MM/yyyy - HH:mm" timeZone="GMT-3" />
+					</h:outputText>
+				</p:column>
+				<p:column sortBy="titulo" headerText="Título">
+					#{noticia.titulo}
+				</p:column>
+
+				<p:column headerText="Ações">
+					<h:commandLink action="#{noticiaBean.remove(noticia)}" value="Remover" style="margin-right: 10px">
+						<f:ajax render="@form" />
+					</h:commandLink>
+					
+					<h:commandLink value="Alterar">
+						<f:setPropertyActionListener target="#{noticiaBean.noticia}" value="#{noticia}" />
+					</h:commandLink>
+				</p:column>
+				
+				<f:facet name="footer">  
+		            Total de #{noticiaBean.noticias.size()} linha(s).  
+		        </f:facet>  
+			</p:dataTable>	
+		
+		</h:form>
+		
+	</ui:define>
+	
+</ui:composition>
+
+</html>

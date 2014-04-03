@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/_template.xhtml">
+
+	<ui:define name="corpo">
+
+		<div class="slideshow">
+
+			<p:carousel itemStyleClass="imgSlideshow" pageLinks="3"
+				autoPlayInterval="6000" numVisible="1" effect="easeInStrong"
+				circular="true" effectDuration="2000"
+				headerText="ACOMPANHE O CAMPEONATO ESTADUAL">
+				<p:graphicImage library="img" name="slide-1.jpg" width="952" />
+				<p:graphicImage library="img" name="slide-2.jpg" width="952" />
+				<p:graphicImage library="img" name="slide-3.jpg" width="952" />
+			</p:carousel>
+
+		</div>
+
+		<div class="content">
+
+			<p:panel header="NOTÍCIAS" style="margin-bottom: 15px">
+
+				<p:dataGrid var="noticia" value="#{noticiaBean.noticiasOrdem}"
+					columns="1" rows="5"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					emptyMessage="Não há notícias cadastradas">
+
+					<h:panelGrid columns="1" style="width:100%" cellpadding="0"
+						cellspacing="0">
+
+						<h:outputText value="#{noticia.data}"
+							style="color:#CCC; font-size:11px; font-style: italic;">
+							<f:convertDateTime pattern="dd/MM/yyyy - HH:mm" timeZone="GMT-3" />
+						</h:outputText>
+
+						<p:column headerText="Título">
+							<h:outputLink value="noticia.xhtml">
+								<h:outputText value="#{noticia.titulo}"
+									style="font-weight: bold; font-size:14px;" />
+								<f:param name="noticia.id" value="#{noticia.id}" />
+							</h:outputLink>
+						</p:column>
+						<h:outputText value="#{noticia.subtitulo}" />
+
+					</h:panelGrid>
+
+				</p:dataGrid>
+
+			</p:panel>
+
+			<p:panel header="TWITTER"
+				style="width: 310px; height:335px; float:left; margin-right: 15px">
+
+				<a class="twitter-timeline" href="https://twitter.com/abcfc"
+					data-widget-id="431267022781939712">Tweets de @abcfc</a>
+				<script>
+					!function(d, s, id) {
+						var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/
+								.test(d.location) ? 'http' : 'https';
+						if (!d.getElementById(id)) {
+							js = d.createElement(s);
+							js.id = id;
+							js.src = p + "://platform.twitter.com/widgets.js";
+							fjs.parentNode.insertBefore(js, fjs);
+						}
+					}(document, "script", "twitter-wjs");
+				</script>
+
+
+
+			</p:panel>
+			<p:panel header="FACEBOOK"
+				style="width: 310px; height: 100%; float:left">
+
+				<div class="fb-like-box"
+					data-href="http://www.facebook.com/ABCFutebolClube"
+					data-width="285" data-colorscheme="light" data-show-faces="true"
+					data-header="false" data-stream="false" data-show-border="false"
+					style="margin-bottom: 10px; padding: 0"></div>
+
+			</p:panel>
+
+			<div id="fb-root"></div>
+			<script>
+				(function(d, s, id) {
+					var js, fjs = d.getElementsByTagName(s)[0];
+					if (d.getElementById(id))
+						return;
+					js = d.createElement(s);
+					js.id = id;
+					js.src = "//connect.facebook.net/pt_BR/all.js#xfbml=1";
+					fjs.parentNode.insertBefore(js, fjs);
+				}(document, 'script', 'facebook-jssdk'));
+			</script>
+
+		</div>
+		<!-- .content -->
+
+	</ui:define>
+
+</ui:composition>
+
+</html>

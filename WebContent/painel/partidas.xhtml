@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"> 
+
+<ui:composition template="/painel/_template.xhtml">
+	
+	<ui:define name="corpo">
+		
+		<h:form id="form1">
+	
+			<p:fieldset legend="Cadastrar Partida" style="margin-bottom: 15px">
+
+				<h2>
+					<h:outputText value="Nova Partida" rendered="#{empty partidaBean.partida.id}" />
+					<h:outputText value="Editar Partida" rendered="#{not empty partidaBean.partida.id}" />
+				</h2>
+				<p:separator />
+					
+				<h:messages styleClass="erros" />
+			
+				<h:panelGrid columns="6" cellspacing="10" width="100%" rendered="#{empty partidaBean.partida.id}"
+					style="margin: 10px 0 10px 0">
+	
+					<h:outputLabel value="Rodada: *" for="rodada" styleClass="label" />
+					<p:spinner id="rodada" value="#{partidaBean.partida.rodada}" required="true"
+						requiredMessage="Campo Obrigatório" size="10" />
+						
+					<h:outputLabel value="Data: *" for="data" styleClass="label" />
+					<p:calendar pattern="dd/MM/yyyy HH:mm" value="#{partidaBean.partida.data}" locale="pt"
+						required="true"	requiredMessage="Campo Obrigatório" id="data" />  
+
+					<h:outputLabel value="Estádio: *" for="estadio" styleClass="label" /> 
+					<p:selectOneMenu value="#{partidaBean.idEstadio}" id="estadio">  
+			            <f:selectItems value="#{estadioBean.estadiosOrdem}" var="estadio" itemLabel="#{estadio.apelido}" 
+			            	itemValue="#{estadio.id}" />
+			        </p:selectOneMenu> 
+			        
+			        <h:outputLabel value="Mandante: *" for="mandante" styleClass="label" />
+					<p:selectOneMenu value="#{partidaBean.partida.mandante}" id="mandante">  
+			            <f:selectItem itemLabel="Selecione" itemValue="" />  
+			            <f:selectItems value="#{clubeBean.clubesOrdem}" var="clube" itemLabel="#{clube.nome}" itemValue="#{clube.nome}" />
+			        </p:selectOneMenu> 
+						
+					<h:outputLabel value="Visitante: *" for="visitante" styleClass="label" />
+					<p:selectOneMenu value="#{partidaBean.partida.visitante}" id="visitante">  
+			            <f:selectItem itemLabel="Selecione" itemValue="" />  
+			            <f:selectItems value="#{clubeBean.clubesOrdem}" var="clube" itemLabel="#{clube.nome}" 
+			            	itemValue="#{clube.nome}" />  
+			        </p:selectOneMenu>
+				
+				</h:panelGrid>
+				
+				<h:panelGrid columns="6" cellspacing="10" width="100%" rendered="#{not empty partidaBean.partida.id}">
+					
+					<h:outputLabel value="Rodada: *" for="rodada2" styleClass="label" />
+					<p:spinner id="rodada2" value="#{partidaBean.partida.rodada}" required="true"
+						requiredMessage="Campo Obrigatório" size="10" />
+						
+					<h:outputLabel value="Data: *" for="data2" styleClass="label" />
+					<p:calendar pattern="dd/MM/yyyy HH:mm" value="#{partidaBean.partida.data}" locale="pt"
+						required="true"	requiredMessage="Campo Obrigatório" id="data2" />    
+					
+					<h:outputLabel value="Estádio: *" for="estadio2" styleClass="label" />
+			        <p:selectOneMenu value="#{partidaBean.idEstadio}" id="estadio2">  
+			            <f:selectItems value="#{estadioBean.estadiosOrdem}" var="estadio" itemLabel="#{estadio.apelido}" 
+			            	itemValue="#{estadio.id}" />
+			        </p:selectOneMenu> 
+			        
+			        <h:outputLabel value="Mandante: *" for="mandante2" styleClass="label" />
+					<p:selectOneMenu value="#{partidaBean.partida.mandante}" id="mandante2">  
+			            <f:selectItem itemLabel="Selecione" itemValue="" />  
+			            <f:selectItems value="#{clubeBean.clubesOrdem}" var="clube" itemLabel="#{clube.nome}" 
+			            	itemValue="#{clube.nome}" />  
+			        </p:selectOneMenu> 
+			        
+			        <h:outputLabel value="Resultado 1: *" for="resultado1" styleClass="label" />
+					<p:spinner id="resultado1" value="#{partidaBean.partida.resultado1}" required="true"
+						requiredMessage="Campo Obrigatório" size="10" />
+						
+					<h:outputLabel value="Resultado 2: *" for="resultado2" styleClass="label" />
+					<p:spinner id="resultado2" value="#{partidaBean.partida.resultado2}" required="true"
+						requiredMessage="Campo Obrigatório" size="10" />
+						
+					<h:outputLabel value="Visitante: *" for="visitante2" styleClass="label" />
+					<p:selectOneMenu value="#{partidaBean.partida.visitante}" id="visitante2">  
+			            <f:selectItem itemLabel="Selecione" itemValue="" />  
+			            <f:selectItems value="#{clubeBean.clubesOrdem}" var="clube" itemLabel="#{clube.nome}" 
+			            	itemValue="#{clube.nome}" />  
+			        </p:selectOneMenu>
+			        
+			        <h:outputLabel value="Finalizado: *" for="finalizado" styleClass="label" />
+					<p:selectOneRadio id="options" value="#{partidaBean.partida.finalizado}" columns="2">  
+			            <f:selectItem itemLabel="Não" itemValue="Não" />
+			            <f:selectItem itemLabel="Sim" itemValue="Sim" />  
+			        </p:selectOneRadio>
+					
+				</h:panelGrid>
+				
+				<div class="alinhar-button">
+					<p:commandButton action="#{partidaBean.grava}" value="Gravar" update="@form" process="@form"
+						rendered="#{empty partidaBean.partida.id}" />
+					<p:commandButton action="#{partidaBean.grava}" value="Alterar" update="@form" process="@form"
+						rendered="#{not empty partidaBean.partida.id}" />
+					<p:commandButton action="partidas" value="Cancelar" update="@form"
+						immediate="true" rendered="#{not empty partidaBean.partida.id}" />
+				</div>
+			
+			</p:fieldset>
+					
+		</h:form>
+		
+		<h:form id="form2">
+
+			<p:dataTable value="#{partidaBean.partidasOrdem}" var="partida" id="dataTable" paginator="true" rows="12"
+			paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+			emptyMessage="Não há partidas cadastradas" currentPageReportTemplate="{currentPage} de {totalPages}"
+			paginatorPosition="bottom" style="text-align: center">
+				
+				<p:column sortBy="rodada" headerText="Rodada">
+					#{partida.rodada}
+				</p:column>
+				<p:column sortBy="data" headerText="Data">
+					<h:outputText value="#{partida.data}">
+						<f:convertDateTime pattern="dd/MM/yyyy - HH:mm" timeZone="GMT-3" />
+					</h:outputText>
+				</p:column>
+				<p:column sortBy="estadio" headerText="Estádio">
+					#{partida.estadio.apelido}
+				</p:column>
+				<p:column sortBy="mandante" headerText="Mandante">
+					#{partida.mandante}
+				</p:column>
+				<p:column sortBy="resultado1" headerText="Resultado">
+					#{partida.resultado1} X #{partida.resultado2}
+				</p:column>
+				<p:column sortBy="visitante" headerText="Visitante">
+					#{partida.visitante}
+				</p:column>
+				<p:column sortBy="finalizado" headerText="Finalizado">
+					#{partida.finalizado}
+				</p:column>
+				
+				<p:column headerText="Ações">
+					<h:commandLink action="#{partidaBean.remove(partida)}" value="Remover" style="margin-right: 25px">
+						<f:ajax render="@form" />
+					</h:commandLink>
+					
+					<h:commandLink value="Alterar">
+						<f:setPropertyActionListener target="#{partidaBean.partida}" value="#{partida}" />
+					</h:commandLink>
+				</p:column>
+				
+				<f:facet name="footer">  
+		            Total de #{partidaBean.partidas.size()} linha(s).  
+		        </f:facet>  
+			</p:dataTable>	
+		
+		</h:form>
+		
+	</ui:define>
+	
+</ui:composition>
+
+</html>

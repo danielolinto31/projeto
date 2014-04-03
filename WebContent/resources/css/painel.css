@@ -1,0 +1,105 @@
+@CHARSET "ISO-8859-1";
+
+* {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	font-family: 'calibri', 'Open Sans', sans-serif;
+	font-size: 12px;
+	background-image: url("../resources/img/gplaypattern.png");
+}
+a {
+	text-decoration: underline;
+	color: #000;
+}
+a:hover {
+	text-decoration: none;
+}
+img {
+	border:0;
+}
+
+#wrapper {
+	width: 960px;
+	margin: 0 auto;
+}
+
+#cabecalho {
+	width: 100%;
+	height: 60px;
+}
+.titulo {
+	float: left;
+	font-weight: bold;
+	font-size: 26px;
+	padding-top: 15px;
+}
+.bem-vindo {
+	float: right;
+	text-align: right;
+	padding-top: 23px;
+}
+
+#menu {
+	width: 100%;
+	height: 50px;
+}
+
+#conteudo {
+	width: 100%;
+}
+#conteudo .content {
+	width: 650px;
+}
+#conteudo .label {
+	font-weight:bold; 
+	font-size: 16px;
+}
+
+.alinhar-button {
+	width: 100%;
+	text-align: center;
+	margin: 15px 0 8px 0;
+}
+
+#rodape {
+	width: 100%;
+	text-align: center;
+	background: #333333
+		url("/projeto/javax.faces.resource/images/ui-bg_diagonals-thick_8_333333_40x40.png.xhtml?ln=primefaces-black-tie")
+		50% 50% repeat;
+	margin-top: 15px;
+	border-top: 2px solid #000;
+	color: #ffffff;
+}
+#rodape .rodapeConteudo {
+	padding: 10px;
+}
+
+/* validacao */
+.erros {
+	margin: 0 0 10px 0;
+	padding: 0 0 10px 0;
+	clear: both;
+	}
+.erros li {
+	display: inline;
+	list-style-position: inside;
+	list-style-type: none;
+	color: #C22;
+	background: #FFDFDF;
+	border: 2px solid #DF7D7D;
+	float: left;
+	padding: 6px;
+	margin: 0 0 10px 1px;
+	width: 98%;
+	text-align: center;
+}
+
+.detalhe {
+	border-bottom: 1px solid #ccc;
+	padding: 0 0 5px 0;
+	margin-bottom: 5px;
+}

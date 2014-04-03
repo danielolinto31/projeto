@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"> 
+
+<ui:composition template="/painel/_template.xhtml">
+	
+	<ui:define name="corpo">
+		
+		<h:form id="form1">
+	 
+			<p:fieldset legend="Cadastrar Jogador" style="margin-bottom: 15px">
+			 
+				<h2>
+					<h:outputText value="Novo Jogador" rendered="#{empty estadioBean.estadio.id}" />
+					<h:outputText value="Editar Jogador" rendered="#{not empty estadioBean.estadio.id}" />
+				</h2>
+				
+				<p:separator />
+				
+				<h:messages styleClass="erros" />
+			
+				<h:panelGrid columns="6" cellspacing="10" style="width: 100%">
+			
+					<h:outputLabel value="Apelido: *" for="apelido" styleClass="label" />
+					<p:inputText id="apelido" value="#{estadioBean.estadio.apelido}" required="true"
+						requiredMessage="Campo Obrigatório" />
+					
+					<h:outputLabel value="Nome: *" for="nome" styleClass="label" />
+					<p:inputText id="nome" value="#{estadioBean.estadio.nome}" required="true"
+						requiredMessage="Campo Obrigatório" />
+					
+					<h:outputLabel value="Capacidade: *" for="capacidade" styleClass="label" />
+					<p:inputText id="capacidade" value="#{estadioBean.estadio.capacidade}" required="true"
+						requiredMessage="Campo Obrigatório" />
+					
+					<h:outputLabel value="Cidade: *" for="cidade" styleClass="label" />
+					<p:inputText id="cidade" value="#{estadioBean.estadio.cidade}" required="true"
+						requiredMessage="Campo Obrigatório" />
+					
+					<h:outputLabel value="Estado: " for="estado" styleClass="label" />
+					<p:selectOneMenu id="estado" value="#{estadioBean.estadio.estado}">
+						<f:selectItem itemLabel="Selecione" itemValue="" />
+						<f:selectItem itemLabel="RN" itemValue="RN" />
+						<f:selectItem itemLabel="PB" itemValue="PB" />
+						<f:selectItem itemLabel="PE" itemValue="PE" />
+						<f:selectItem itemLabel="CE" itemValue="CE" />
+					</p:selectOneMenu>
+				
+				</h:panelGrid>
+				
+				<div class="alinhar-button">
+					<p:commandButton action="#{estadioBean.grava}" value="Gravar" update="@form" process="@form"
+						rendered="#{empty estadioBean.estadio.id}" />
+					<p:commandButton action="#{estadioBean.grava}" value="Alterar" update="@form" process="@form"
+						rendered="#{not empty estadioBean.estadio.id}" />
+					<p:commandButton action="estadios" value="Cancelar" update="@form"
+						immediate="true" rendered="#{not empty estadioBean.estadio.id}" />
+				</div>
+			
+			</p:fieldset>
+					
+		</h:form>
+		
+		<h:form id="form2">
+
+			<p:dataTable value="#{estadioBean.estadiosOrdem}" var="estadio" id="dataTable" paginator="true" rows="10"
+			paginatorTemplate="{CurrentPageReport}  {PreviousPageLink} {PageLinks} {NextPageLink}"
+			emptyMessage="Não há estádios cadastrados" currentPageReportTemplate="{currentPage} de {totalPages}"
+			paginatorPosition="bottom" style="text-align: center">
+			
+				<p:column sortBy="apelido" headerText="Apelido">
+					#{estadio.apelido}
+				</p:column>
+				<p:column sortBy="nome" headerText="Nome">
+					#{estadio.nome}
+				</p:column>
+				<p:column sortBy="capacidade" headerText="Capacidade">
+					#{estadio.capacidade}
+				</p:column>
+				<p:column sortBy="cidade" headerText="Cidade">
+					#{estadio.cidade}
+				</p:column>
+				<p:column sortBy="estado" headerText="Estado">
+					#{estadio.estado}
+				</p:column>
+				
+				<p:column headerText="Ações">
+					<h:commandLink action="#{estadioBean.remove(estadio)}" value="Remover" style="margin-right: 50px">
+						<f:ajax render="@form" />
+					</h:commandLink>
+					
+					<h:commandLink value="Alterar">
+						<f:setPropertyActionListener target="#{estadioBean.estadio}" value="#{estadio}" />
+					</h:commandLink>
+				</p:column>
+				
+				<f:facet name="footer">  
+		            Total de #{estadioBean.estadios.size()} linha(s).  
+		        </f:facet>  
+			</p:dataTable>	
+		
+		</h:form>
+		
+	</ui:define>
+	
+</ui:composition>
+
+</html>

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/painel/_template.xhtml">
+	
+	<ui:define name="corpo">
+
+		<p:fieldset legend="Cadastrar Classificação" style="margin-bottom: 15px">
+			
+			<p:tabMenu activeIndex="0" style="margin-bottom:10px">
+			    <p:menuitem value="Campeonato" url="campeonatos.xhtml" />  
+			    <p:menuitem value="Fase" url="fases.xhtml" />   
+			</p:tabMenu> 
+
+			<h:form id="form1">
+		    
+		        <h2>
+					<h:outputText value="Novo Campeonato" rendered="#{empty campeonatoBean.campeonato.id}" />
+					<h:outputText value="Editar Campeonato" rendered="#{not empty campeonatoBean.campeonato.id}" />
+				</h2>
+				<p:separator />
+					
+				<h:messages styleClass="erros" />
+			
+				<h:panelGrid columns="6" cellspacing="10" cellpadding="10" width="90%" style="margin: 10px 0 10px 0"
+					rendered="#{empty campeonatoBean.campeonato.id}">
+						
+					<h:outputLabel value="Nome: *" for="nome" styleClass="label" />
+					<p:inputText id="nome" value="#{campeonatoBean.campeonato.nome}" required="true"
+						requiredMessage="Campo Obrigatório" size="40" />				
+					
+					<h:outputLabel value="Ano: *" for="ano" styleClass="label" />
+					<p:inputMask mask="2099" value="#{campeonatoBean.campeonato.ano}" id="ano"
+						required="true"	requiredMessage="Campo Obrigatório" size="10" />
+					
+					<h:outputLabel value="Ativo: *" for="ativo" styleClass="label" />
+					<p:selectOneRadio id="ativo" value="#{campeonatoBean.campeonato.ativo}">  
+			            <f:selectItem itemLabel="Não" itemValue="Não" />
+			            <f:selectItem itemLabel="Sim" itemValue="Sim" />
+			        </p:selectOneRadio>
+				
+				</h:panelGrid>
+				
+				<h:panelGrid columns="6" cellspacing="10" cellpadding="10" width="90%" style="margin: 10px 0 10px 0"
+					rendered="#{not empty campeonatoBean.campeonato.id}">
+						
+					<h:outputLabel value="Nome: *" for="nome2" styleClass="label" />
+					<p:inputText id="nome2" value="#{campeonatoBean.campeonato.nome}" required="true"
+						requiredMessage="Campo Obrigatório" size="40" />				
+					
+					<h:outputLabel value="Ano: *" for="ano2" styleClass="label" />
+					<p:inputMask mask="2099" value="#{campeonatoBean.campeonato.ano}" id="ano2"
+						required="true"	requiredMessage="Campo Obrigatório" size="10" />
+					
+					<h:outputLabel value="Ativo: *" for="ativo2" styleClass="label" />
+					<p:selectOneRadio id="ativo2" value="#{campeonatoBean.campeonato.ativo}">  
+			            <f:selectItem itemLabel="Não" itemValue="Não" />
+			            <f:selectItem itemLabel="Sim" itemValue="Sim" />
+			        </p:selectOneRadio>
+			        
+			        <h:outputLabel value="Campeao: *" for="campeao" styleClass="label" />	
+					<p:selectOneMenu value="#{campeonatoBean.idCampeao}" id="campeao">  
+						<f:selectItem itemLabel="Selecione" itemValue="" />
+			            <f:selectItems value="#{clubeBean.clubesOrdem}" var="clube" itemLabel="#{clube.nome}" 
+			            	itemValue="#{clube.id}" />
+			        </p:selectOneMenu>
+				
+				</h:panelGrid>
+				
+				<div class="alinhar-button">
+					<p:commandButton action="#{campeonatoBean.grava}" value="Gravar" update="@form" process="@form"
+						rendered="#{empty campeonatoBean.campeonato.id}" />
+					<p:commandButton action="#{campeonatoBean.grava}" value="Alterar" update="@form" process="@form"
+						rendered="#{not empty campeonatoBean.campeonato.id}" />
+					<p:commandButton action="campeonatos" value="Cancelar" update="@form"
+						immediate="true" rendered="#{not empty campeonatoBean.campeonato.id}" />
+				</div>
+				
+			</h:form>
+			
+			<h:form id="form2">
+
+				<p:dataTable value="#{campeonatoBean.campeonatosOrdem}" var="campeonato" id="dataTable" paginator="true" rows="12"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+				emptyMessage="Não há campeonatos cadastrados" currentPageReportTemplate="{currentPage} de {totalPages}"
+				paginatorPosition="bottom" style="text-align: center; margin-bottom: 5px">
+	
+					<p:column sortBy="nome" headerText="Nome">
+						#{campeonato.nome}
+					</p:column>
+					<p:column sortBy="ano" headerText="Ano">
+						#{campeonato.ano}
+					</p:column>
+					<p:column headerText="Clube Campeão">
+						#{campeonato.campeao.nomeCompleto}
+					</p:column>
+					<p:column sortBy="ativo" headerText="Ativo">
+						#{campeonato.ativo}
+					</p:column>
+					
+					<p:column headerText="Ações">
+						<h:commandLink action="#{campeonatoBean.remove(campeonato)}" value="Remover" style="margin-right: 25px">
+							<f:ajax render="@form" />
+						</h:commandLink>
+						
+						<h:commandLink value="Alterar">
+							<f:setPropertyActionListener target="#{campeonatoBean.campeonato}" value="#{campeonato}" />
+						</h:commandLink>
+					</p:column>
+					
+					<f:facet name="footer">  
+			            Total de #{campeonatoBean.campeonatos.size()} linha(s).  
+			        </f:facet>  
+				</p:dataTable>	
+			
+			</h:form>
+			
+		</p:fieldset>
+
+	</ui:define>
+	
+</ui:composition>
+
+</html>

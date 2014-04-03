@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"> 
+
+<f:view contentType="text/html">
+
+	<div id="menu">
+		<p:menubar>
+			<p:menuitem value="Início" url="/index.xhtml" />
+			<p:menuitem value="Jogadores" url="/jogadores.xhtml" />
+			<p:menuitem value="Clubes" url="/clubes.xhtml" />
+			<p:submenu label="Campeonato">
+				<p:menuitem value="Copa RN" url="/campeonato.xhtml" />
+				<p:menuitem value="Copa Cidade de Natal" url="/campeonato.xhtml" />
+			</p:submenu>
+			<p:menuitem value="Notícias" url="/noticias.xhtml" />
+			<p:menuitem value="Contato" url="/contato.xhtml" />
+			<p:menuitem value="Painel" url="/painel/index.xhtml" style="margin-left: 372px" />
+		</p:menubar>
+		<!-- <p:menuitem value="Painel" url="/painel/login.xhtml" style="margin-left: 372px" /> -->
+	</div> <!-- #menu -->
+	
+</f:view>
+
+</html>

@@ -1,0 +1,55 @@
+@CHARSET "ISO-8859-1";
+
+a {
+	text-decoration: underline;
+}
+a:hover {
+	text-decoration: none;
+}
+
+body {
+	font-family: 'calibri', 'Open Sans', sans-serif;
+	font-size: 12px;
+	background-image: url("../resources/img/gplaypattern.png");
+}
+
+#wrapper {
+	width: 260px;
+	height: 250px;
+    position:absolute; 
+    left:50%;
+    margin-top: 125px;
+    margin-left:-130px;
+}
+
+.first, .second {
+	padding: 5px;
+	font-weight: bold;
+	font-size: 16px;
+}
+
+.link-inicio {
+	margin-bottom: 10px;
+	float: right;
+}
+
+/* validacao */
+.erros {
+	width: 94%;
+	margin: 0 0 10px 0;
+	padding: 0 0 10px 0;
+	clear: both;
+	}
+.erros li {
+	display: inline;
+	list-style-position: inside;
+	list-style-type: none;
+	color: #C22;
+	background: #FFDFDF;
+	border: 2px solid #DF7D7D;
+	float: left;
+	padding: 6px;
+	margin: 0 0 10px 1px;
+	width: 98%;
+	text-align: center;
+}
